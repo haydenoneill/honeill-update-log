@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Honeill Update Log
  * Description: Know exactly what changed and when. Logs every plugin install, update, activation, deactivation and deletion — with who did it, the from/to version, and whether it worked — all viewable and exportable under Tools.
- * Version: 1.1.1
+ * Version: 1.2.0
  * Author: Hayden O'Neill
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -555,6 +555,9 @@ final class Honeill_Update_Log
             self::RETENTION_DAYS
         )) . '</p>';
 
+        echo '<h2>' . esc_html__('Usage statistics', 'honeill-update-log') . '</h2>';
+        Honeill_Update_Log_Telemetry::render_setting();
+
         echo '</div>';
     }
 
@@ -629,6 +632,9 @@ final class Honeill_Update_Log
         exit;
     }
 }
+
+require_once __DIR__ . '/includes/telemetry.php';
+Honeill_Update_Log_Telemetry::boot(__FILE__, '1.2.0', array('tools_page_honeill-update-log'));
 
 register_activation_hook(__FILE__, array('Honeill_Update_Log', 'activate'));
 register_deactivation_hook(__FILE__, array('Honeill_Update_Log', 'deactivate'));

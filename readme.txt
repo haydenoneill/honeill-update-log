@@ -4,7 +4,7 @@ Tags: audit log, activity log, plugins, update history, changelog
 Requires at least: 5.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,7 +29,15 @@ Unlike the big all-in-one activity loggers, this does one thing: plugin lifecycl
 
 = Privacy / data =
 
-Everything is stored in a single custom table in your own database. The plugin makes **no external connections** and sends no data anywhere. It records the WordPress display name (or login) of the user who performed each action, purely for your own audit trail.
+Everything is stored in a single custom table in your own database, and the log itself never leaves your site. The only outside connection is the optional usage statistics below, which are off unless you opt in. It records the WordPress display name (or login) of the user who performed each action, purely for your own audit trail.
+
+== External services ==
+
+* **Service:** Honeill plugin usage statistics (`https://honeill-plugin-telemetry.vercel.app/api/v1/report` and `/api/v1/forget`), run by the plugin's author.
+* **Only if you opt in.** Honeill Update Log sends nothing until an administrator clicks "Allow" on the one-time notice (or turns it on in the plugin settings). It is off by default and can be turned off at any time.
+* **When it connects:** once shortly after you opt in, then once a week. When you opt out or delete the plugin, it asks for your site's data to be erased.
+* **What is sent:** the plugin name and version, a random ID created for your site, your site address, WordPress/PHP/database versions, site language, whether it is a multisite, the number of users, published posts, published pages and media items, the web server software, the active theme's name and the PHP memory limit. No personal data or content is sent.
+* **Privacy and terms:** https://honeill-plugin-telemetry.vercel.app/privacy
 
 == Installation ==
 
@@ -65,6 +73,9 @@ Clearing is limited to administrators (super admins on multisite), and every cle
 
 == Changelog ==
 
+= 1.2.0 =
+* New: optional, opt-in usage statistics (off by default). A one-time notice asks administrators whether to share basic, non-personal site information weekly; it can be changed under Tools → Honeill Update Log. Opting out or deleting the plugin erases this site's data. See "External services".
+
 = 1.1.1 =
 * Fixed: plugin installs were not being logged. Uploading a ZIP that replaces an installed plugin is now logged as an update, with the version it came from.
 * Security: a plugin with a very long name or version could avoid being logged at all. Values are now trimmed to fit instead.
@@ -83,6 +94,9 @@ Clearing is limited to administrators (super admins on multisite), and every cle
 * Initial release: logs plugin install, update (from/to version), activate, deactivate and delete, with user, timestamp and success. Tools screen with filtering, pagination, CSV export and daily auto-prune.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Adds optional, opt-in usage statistics. Nothing is sent unless an administrator chooses to allow it.
 
 = 1.1.1 =
 Installs are now logged, failed updates are recorded correctly, and a plugin can no longer slip past the log with an over-long version string.

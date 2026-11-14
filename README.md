@@ -24,7 +24,7 @@ View the log under **Tools → Honeill Update Log**. You can filter by event, pa
 
 ## Privacy
 
-Everything stays in one custom table (`{prefix}honeill_update_log`) in your own database. No external connections are made.
+The log stays in one custom table (`{prefix}honeill_update_log`) in your own database and never leaves your site. The only outside connection is the opt-in usage statistics below.
 
 ## Hardening
 
@@ -35,16 +35,21 @@ Everything stays in one custom table (`{prefix}honeill_update_log`) in your own 
   add_filter( 'honeill_update_log_can_clear', '__return_false' );
   ```
 
+## Usage statistics (opt-in)
+
+The plugin can send basic, non-personal site information (site address, WordPress/PHP/database versions, language, theme, web server, memory limit, and user/post/page/media counts) to its author once a week, **only if an administrator opts in**. It's off by default, can be turned off at any time in the plugin settings, and opting out or deleting the plugin erases the site's data. Details: <https://honeill-plugin-telemetry.vercel.app/privacy>. The code is in `includes/telemetry.php`.
+
 ## Development
 
 This repository mirrors the plugin as published on WordPress.org (`trunk` and tags in [plugins.svn.wordpress.org](https://plugins.svn.wordpress.org/honeill-update-log/)). There is no build step.
 
 ```
 honeill-update-log.php   main plugin file
+includes/telemetry.php   opt-in usage statistics
 uninstall.php            drops the table and options (every site on multisite)
 readme.txt               WordPress.org readme (changelog lives here)
 ```
 
-## License
+## Licence
 
 GPLv2 or later. See [LICENSE](LICENSE).
